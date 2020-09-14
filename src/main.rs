@@ -166,7 +166,7 @@ impl Connection {
                 private_key: Some(path.to_str().unwrap().to_string()),
                 ..self
             }),
-            Err(_) => return Err(format!("File : {} Not Found", private_key)),
+            Err(_) => Err(format!("File : {} Not Found", private_key)),
         }
     }
 
@@ -218,7 +218,7 @@ impl Connection {
         default = default.host(&host).username(&username);
 
         if !port.is_empty() {
-            default = default.port(port.parse::<u32>().unwrap_or_else(|_| 22));
+            default = default.port(port.parse::<u32>().unwrap_or(22));
         }
 
         if !private_key.is_empty() {
@@ -250,7 +250,7 @@ fn read_input(hosts: &[Connection]) -> Result<usize, String> {
                 Err("Not a number".to_string())
             }
         }
-        Err(err) => return Err(err.to_string()),
+        Err(err) => Err(err.to_string()),
     }
 }
 
@@ -270,7 +270,7 @@ fn file_read() -> Result<(), String> {
             hosts[index].connect();
         }
         Err(err) => {
-            return Err(err.to_string());
+            return Err(err);
         }
     };
     Ok(())
