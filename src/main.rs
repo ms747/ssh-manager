@@ -33,7 +33,7 @@ macro_rules! HostList {
     ($($connection:expr),+) => {{
         let mut hosts: Vec<Option<Connection>> = Vec::new();
         $(hosts.push($connection);)+
-        let filtered :Vec<Connection> = hosts.into_iter().filter_map(|e| e).collect();
+        let filtered : Vec<Connection> = hosts.into_iter().filter_map(|e| e).collect();
         filtered
     }};
 }
